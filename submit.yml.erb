@@ -4,8 +4,11 @@ batch_connect:
   conn_params:
     - csrf_token
 script:
-  job_name: "ood-rstudio"
+# See the Slurm section at https://osc.github.io/ood-documentation/master/enable-desktops/custom-job-submission.html
   native:
-    - <%= "--nodes=1" %>
-    - <%= "--ntasks=#{num_cores}" %>
-    - <%= "--nodelist=#{node}" %>
+    - "--mem-per-cpu"
+    - "25G"
+    - "--time"
+    - "<%= duration %>"
+    - "--cpus-per-task"
+    - "<%= session_size.blank? ? 4 : session_size.to_i %>"
